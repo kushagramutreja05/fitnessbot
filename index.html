@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Fitness Chatbot</title>
+    <style>
+        /* Basic Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            /*background-color: rgb(251, 253, 251);*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(42,42,42);
+        }
+
+        
+        /* Page Title */
+        #title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: rgb(59, 83, 83);
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+            width: 100%;
+            z-index: 0;
+            height: 800px;
+        }
+
+        /* Chat Container */
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 92%;
+            width: 1000px;
+            margin: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            overflow: hidden;
+            transition: background-color 0.3s, border-color 0.3s;
+            z-index: 1;
+        }
+
+        /* Messages Area */
+        #messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #e9ecef;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            max-width: 70%;
+            word-break: break-word;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bot-avatar img {
+            min-width: 50px;
+            width: 100%;
+            border-radius: 50%;
+            background-size: cover;
+        }
+
+        .user {
+            background-color: #007bff;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .bot {
+            background-color: #28a745;
+            color: #fff;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        /* User Input Area */
+        #user-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+            background-color: #fff;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        #input-field {
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 10px 0 0 10px;
+            outline: none;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #send-button {
+            border: none;
+            padding: 10px 20px;
+            background-color:rgb(59, 83, 83);
+            color: #fff;
+            border-radius: 0 10px 10px 0;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        /* Date label */
+        .date-label {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        /* Bot message styling for readability */
+        .message.bot {
+            white-space: pre-line;
+            line-height: 1.6;
+        }
+
+        #corp {
+            height: 50vh;
+            margin: 0 20px 0 20px;
+            margin-top: 20.5%;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #corp {
+                display: none;
+            }
+            #title {
+                
+                min-height: 100vh;
+        font-size: 36px; /* Adjusted font size */
+        padding: 5px;
+        height: auto; /* Make the height auto for small devices */
+        margin: 10px;
+        z-index: 0;
+    }
+
+    #chat-container {
+        min-height: 85vh;
+        width: 90%; /* Adjust chat container width for small devices */
+        background-image:  url('assets/corporate2.png');
+        
+        display: block; /* or block */
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+        height: 90vh;
+        border: 1px ;
+        z-index: 2;
+        background-color: white;
+    }
+
+    .bot-avatar {
+        width: 30px; /* Reduce bot avatar size */
+        height: 30px;
+    }
+
+    .message {
+        font-size: 14px; /* Reduce message font size */
+    }
+
+    #send-button {
+        font-size: 14px; /* Adjust button size */
+        padding: 8px 16px; /* Adjust button padding */
+    }
+
+    #input-field {
+        font-size: 16px !important; /* Adjust input field font size */
+    }
+    
+        }
+
+    </style>
+</head>
+<body>
+    <img src="assets/corporate.png" alt="corp" id="corp">
+    <div id="title" style="text-transform: uppercase;">Fitness Chatbot
+        <div id="chat-container">
+            <div id="messages"></div>
+            <div id="user-input">
+                <input type="text" id="input-field" placeholder="Type your message here...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+    <img src="assets/corporate2.png" alt="corp" id="corp">
+
+    <!-- Dark mode switch button -->
+    
+
+    <script>
+        // Function to display messages
+        function displayMessage(message, sender) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + sender;
+
+            if (sender === 'bot') {
+                const botAvatar = document.createElement('div');
+                botAvatar.className = 'bot-avatar';
+                const img = document.createElement('img');
+                img.src = 'assets/bot-avatar.png';  // Bot avatar image path
+                botAvatar.appendChild(img);
+                messageDiv.appendChild(botAvatar);
+            }
+
+            const textDiv = document.createElement('div');
+            textDiv.innerHTML = message;
+            messageDiv.appendChild(textDiv);
+
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Display initial bot message with avatar
+        function displayInitialMessage() {
+            const messagesDiv = document.getElementById('messages');
+            const dateLabel = document.createElement('div');
+            dateLabel.className = 'date-label';
+            dateLabel.innerText = 'Today';
+            messagesDiv.appendChild(dateLabel);
+
+            displayMessage("👋 Hello, my name is FITSY.", 'bot');
+        }
+
+        // Event listener for the send button
+        window.addEventListener('keydown', (e) => {
+            if(e.key === "Enter") {
+                document.getElementById('send-button').click();
+            }
+        })
+
+        document.getElementById('send-button').addEventListener('click', () => {
+            const userInput = document.getElementById('input-field').value;
+            if (userInput.trim() === '') return;
+
+            displayMessage(userInput, 'user');
+
+            fetch('http://127.0.0.1:5000/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayMessage(data.reply, 'bot');
+                document.getElementById('input-field').value = ''; // Clear input field
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                displayMessage("Sorry, something went wrong.", 'bot');
+                document.getElementById('input-field').value = '';
+            });
+        });
+
+        const inputField = document.getElementById('input-field');
+
+        inputField.addEventListener('focus', () => {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 100); // Delay to ensure the keyboard is fully open
+        });
+
+        inputField.addEventListener('blur', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+       
+
+        // Display initial bot message when the page loads
+        window.onload = displayInitialMessage;
+    </script>
+</body>
+</html>
