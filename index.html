@@ -152,14 +152,14 @@
             line-height: 1.6;
         }
 
-        #corp {
+        .corp {
             height: 50vh;
             margin: 0 20px 0 20px;
             margin-top: 20.5%;
         }
 
         @media only screen and (max-width: 768px) {
-            #corp {
+            .corp {
                 display: none;
             }
             #title {
@@ -176,16 +176,23 @@
         min-height: 85vh;
         width: 90%; /* Adjust chat container width for small devices */
         background-image:  url('assets/corporate2.png');
-        
-        display: block; /* or block */
-        position: relative;
-        background-size: cover;
+        display: flex; /* or block */
+        background-repeat: no-repeat;
+        background-size: 90%;
         background-position: center;
         overflow: hidden;
         height: 90vh;
         border: 1px ;
         z-index: 2;
         background-color: white;
+    }
+
+    #messages {
+    background-color: rgba(233, 236, 239, 0.4); /* Example with opacity */
+    }
+
+    #user-input {
+    background-color: rgba(255, 255, 255, 0.4); /* Example with opacity */
     }
 
     .bot-avatar {
@@ -211,7 +218,7 @@
     </style>
 </head>
 <body>
-    <img src="assets/corporate.png" alt="corp" id="corp">
+    <img src="assets/corporate.png" alt="corp" class="corp">
     <div id="title" style="text-transform: uppercase;">Fitness Chatbot
         <div id="chat-container">
             <div id="messages"></div>
@@ -221,7 +228,7 @@
             </div>
         </div>
     </div>
-    <img src="assets/corporate2.png" alt="corp" id="corp">
+    <img src="assets/corporate2.png" alt="corp" class="corp">
 
     <!-- Dark mode switch button -->
     
